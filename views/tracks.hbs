@@ -1,0 +1,114 @@
+{{! Create a table }}
+<h1>Tracks</h1>
+<nav>
+  <a href="/#">Index</a>
+  <a href="Artists">Artists</a> 
+  <a href="Customers">Customers</a> 
+  <a href="releases">Releases</a> 
+  <a href="tracks">Tracks</a>
+  <a href="orders">Orders</a>
+  <a href="releaseorders">ReleaseOrders</a>
+</nav>
+
+<main>
+<table id="track-table">
+  {{! Header section }}
+  <thead>
+
+    {{! For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders }}
+    <tr>
+      {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+      {{/each}}
+      <th>delete</th>
+    </tr>
+  </thead>
+
+  {{! Body section }}
+  <tbody>
+
+    {{! For each row, print}}
+    {{#each data}}
+      <tr data-value={{this.trackID}}>
+        <td>{{this.trackID}}</td>
+        <td>{{this.title}}</td>
+        <td>{{this.releaseID}}</td>
+
+        <td><button onclick="deleteTrack({{this.trackID}})">Delete</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<section>
+<h2>Search Tracks</h2>
+<p>Search by Track title using the field below.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="search-track-html" method='GET' action='/tracks'>
+    <label for="input-trackSearch" class="required">Search by Track title: </label>
+    <input type="text" name="trackSearch" id="trackTitle" placeholder="Enter track title...">
+  
+    <input type="submit">
+    <a href='/tracks'><button>Reset</button></a>
+</form>
+</section>
+<!-- /views/index.hbs -->
+
+{{!-- Form to add a record to the table  --}}
+<section>
+<h2>Adding a Track</h2>
+<p>To add a new track, please enter the information below and click 'Submit'!</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="add-track-form-ajax">
+    
+    <label for="input-trackTitle" class="required">Track title: </label>
+    <input type="text" name="input-trackTitle" id="input-trackTitle" placeholder="Enter track title...">
+
+
+    <label for="input-release" class="required">Release</label>
+    <select name="input-release" id="mySelectRelease">
+        <option value="test">Select a Release</option>
+
+    </select>
+
+    <input type="submit">
+</form>
+</section>
+
+<section>
+<h2>Updating a Track</h2>
+<p>To update a specific track's title or release, select their name from the drop-down menu on the left and then enter the new values.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="update-track-form-ajax">
+
+    <label for="input-trackUpdate" class="required">Track</label>
+    <select name="input-trackUpdate" id="mySelectTrackUpdateTrack">
+        {{#each data}}
+        <option value="{{this.trackID}}">{{this.title}}</option>
+        {{/each}}
+    </select>
+    
+  <label for="input-title-update" class="required">Title: </label>
+    <input type="text" name="input-title-update" id="input-title-update" placeholder="Enter track title...">
+
+<label for="input-trackUpdate" class="required">Release:</label>
+    <select name="input-release" id="mySelectTrackUpdateRelease">
+        <option value="test">Select a Release</option>
+
+    </select>
+
+
+    <input type="submit">
+
+</form>
+</section>
+</main>
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_track.js"></script>
+<script src="./js/retrieve_releases.js"></script>
+<script src="./js/update_track.js"></script>
+<script src="./js/delete_track.js"></script>
+<link rel="stylesheet" href="./css/global.css">

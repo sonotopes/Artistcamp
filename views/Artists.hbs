@@ -1,0 +1,133 @@
+<h1>Artists</h1>
+<nav>
+  <a href="/#">Index</a>
+  <a href="Artists">Artists</a>
+  <a href="Customers">Customers</a>
+  <a href="releases">Releases</a>
+  <a href="tracks">Tracks </a>
+  <a href="orders">Orders</a>
+  <a href="releaseorders">ReleaseOrders</a>
+</nav>
+
+<main>
+  {{! Create a table }}
+  <table id="artist-table">
+
+    {{! Header section }}
+    <thead>
+
+      {{! For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders }}
+      <tr>
+        {{#each data.[0]}}
+          <th>
+            {{@key}}
+          </th>
+        {{/each}}
+        <th>delete</th>
+      </tr>
+    </thead>
+
+    {{! Body section }}
+    <tbody>
+
+      {{! For each row, print}}
+      {{#each data}}
+        <tr data-value={{this.artistID}}>
+          <td>{{this.artistID}}</td>
+          <td>{{this.artistName}}</td>
+          <td>{{this.genre}}</td>
+          <td>{{this.location}}</td>
+          <td><img
+              src="{{this.imageURL}}"
+              alt="{{this.imageURL}}"
+              style="width:100px;height:100px;"
+            /></td>
+          <td>{{this.password}}</td>
+          <td><button
+              onclick="deleteArtist({{this.artistID}})"
+            >Delete</button></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <section>
+    <h2>Search Artists</h2>
+    <p>Search by Artist name using the field below. Partial artis names are OK
+      too!</p>
+    <p>Required fields are indicated with: <span>*</span></p>
+    <form id="search-artist-html" method="GET" action="/Artists">
+      <label for="input-artistSearch" class="required">Search by Artist Name:
+      </label>
+      <input type="text" name="artistSearch" id="artistName" />
+
+      <input type="submit" />
+      <a href="/"><button>Reset</button></a>
+    </form>
+  </section>
+
+  <!-- /views/index.hbs -->
+
+  <section>
+    {{! Form to add a record to the table  }}
+    <h2>Add Artist</h2>
+    <p>To add a new Artist, please enter their information below and click
+      'Submit'!</p>
+    <p>Required fields are indicated with: <span>*</span></p>
+    <form id="add-artist-form-ajax">
+      <label for="input-artistName" class="required">Artist Name: </label>
+      <input type="text" name="input-artistName" id="input-artistName" />
+
+      <label for="input-genre" class="required">Genre: </label>
+      <input type="text" name="input-genre" id="input-genre" />
+
+      <label for="input-location" class="required">Location: </label>
+      <input type="text" name="input-location" id="input-location" />
+
+      <label for="input-imageURL" class="required">Image URL: </label>
+      <input type="text" name="input-imageURL" id="input-imageURL" />
+
+      <label for="input-password" class="required">Password: </label>
+      <input type="text" name="input-password" id="input-password" />
+
+      <input type="submit" />
+    </form>
+  </section>
+
+  <section>
+    <h2>Update Artist</h2>
+    <p>To update a specific artist's genre or location, select their name from
+      the drop-down menu on the left and then enter the new values.</p>
+    <p>Required fields are indicated with: <span>*</span></p>
+    <form id="update-artist-form-ajax">
+
+      <label for="input-artistNameUpdate" class="required">Artist Name</label>
+      <select name="input-artistNameUpdate" id="mySelect">
+        <option value="test">Select an artist</option>
+        {{#each data}}
+          <option value="{{this.artistID}}">{{this.artistName}}</option>
+        {{/each}}
+      </select>
+      <label for="input-genre-update" class="required">Genre: </label>
+      <input type="text" name="input-genre-update" id="input-genre-update" />
+
+      <label for="input-location-update" class="required">Location: </label>
+      <input
+        type="text"
+        name="input-location-update"
+        id="input-location-update"
+      />
+
+      <input type="submit" />
+
+    </form>
+  </section>
+
+</main>
+
+{{! Embed our javascript to handle the DOM manipulation and AJAX request }}
+<script src="./js/update_artist.js"></script>
+<script src="./js/add_artist.js"></script>
+<script src="./js/delete_artist.js"></script>
+<link rel="stylesheet" href="./css/global.css" />

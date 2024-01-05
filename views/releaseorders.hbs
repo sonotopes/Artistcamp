@@ -1,0 +1,128 @@
+{{! Create a table }}
+<h1>Release Orders</h1>
+<nav>
+  <a href="/#">Index</a>
+  <a href="Artists">Artists</a> 
+  <a href="Customers">Customers</a> 
+  <a href="releases">Releases</a> 
+  <a href="tracks">Tracks</a>
+  <a href="orders">Orders</a>
+  <a href="releaseorders">ReleaseOrders</a>
+</nav>
+
+<main>
+<table id="release-order-table">
+
+  {{! Header section }}
+  <thead>
+
+    {{! For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders }}
+    <tr>
+      {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+      {{/each}}
+      <th>delete</th>
+    </tr>
+  </thead>
+
+  {{! Body section }}
+  <tbody>
+
+    {{! For each row, print }}
+    {{#each data}}
+      <tr data-value={{this.releaseorderID}}>
+        <td>{{this.releaseorderID}}</td>
+        <td>{{this.releaseID}}</td>
+        <td>{{this.orderID}}</td>
+        <td>{{this.purchasePrice}}</td>
+        
+        <td><button onclick="deleteReleaseOrder({{this.releaseorderID}})">Delete</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+  
+</table>
+
+<section> 
+<h2>Search <em>Release Orders</em></h2>
+<p>Search by Release Order ID using the field below.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="search-release-order-html" method='GET' action='/releaseorders' >
+    <label for="input-releaseorderSearch" class="required">Search by Release Order ID: </label>
+    <input type="number" name="releaseorderSearch" id="releaseorderName">
+  
+    <input type="submit">
+    <a href='/releaseorders'><button>Reset</button></a>
+</form>
+</section>
+
+<section>
+{{!-- Form to add a record to the table  --}}
+<h2>Add a Release Order</h2>
+<p>To add a new Release Order, please enter the information below and click 'Submit'!</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="add-release-order-form-ajax">
+    <label for="input-releaseID" class="required">Release ID: 
+        <select name="input-releaseID" id="mySelectAddReleaseRO">
+        <option value="test">Select a Release</option>
+        </select>
+    </label>
+
+    <label for="input-orderID" class="required">Order ID: 
+        <select name="input-orderID" id="mySelectAddOrderRO">
+        <option value="test">Select an Order</option>
+        </select>
+    </label>
+
+    <label for="input-purchasePrice" class="required">Purchase Price: </label>
+    <input type="number" name="input-purchasePrice" id="input-purchasePrice">
+    
+    <input type="submit">
+</form>
+</section>
+
+<section>
+<h2>Update a Release Order</h2>
+<p>To update a specific Release Order's order ID, release ID, or purchase price, select their id's from the drop-down menu on the left and then enter the new values.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="update-release-order-form-ajax">
+
+  <label for="input-releaseorderIDUpdate" class="required">Release Order: </label>
+    <select name="input-releaseorderIDUpdate" id="mySelectReleaseOrderUpdate">
+        <option value="test">Select a Release Order</option>
+        {{#each data}}
+        <option value="{{this.releaseorderID}}">{{this.releaseorderID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-releaseIDUpdate" class="required">Release ID: 
+        <select name="input-releaseIDUpdate" id="mySelectReleaseOrderUpdateRelease">
+        <option value="test">Select a Release</option>
+        </select>
+    </label>
+
+    <label for="input-orderIDUpdate" class="required">Order ID: 
+        <select name="input-orderIDUpdate" id="mySelectReleaseOrderUpdateOrder">
+        <option value="test">Select an Order</option>
+        </select>
+    </label>
+
+    <label for="input-purchasePriceUpdate" class="required">Purchase Price: </label>
+    <input type="number" name="input-purchasePriceUpdate" id="input-purchasePriceUpdate" step="0.01">
+
+    <input type="submit">
+
+</form>
+</section>
+</main>
+
+<script src="./js/retrieve_releasesRO.js"></script>
+<script src="./js/retrieve_orders.js"></script>
+
+<script src="./js/add_releaseorders.js"></script>
+<script src="./js/update_releaseorders.js"></script>
+<script src="./js/delete_releaseorders.js"></script>
+<link rel="stylesheet" href="./css/global.css">

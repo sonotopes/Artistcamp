@@ -1,0 +1,16 @@
+{
+  "name": "project-files",
+  "version": "1.0.0",
+  "description": "Much of the HTML & JS code in this project is based on or adapted from the CS 340 Node.js starter code.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "mysql": "^2.18.1"
+  }
+}

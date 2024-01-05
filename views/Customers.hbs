@@ -1,0 +1,119 @@
+<h1>Customers</h1>
+<nav>
+  <a href="/#">Index</a>
+  <a href="Artists">Artists</a> 
+  <a href="Customers">Customers</a> 
+  <a href="releases">Releases</a> 
+  <a href="tracks">Tracks</a>
+  <a href="orders">Orders</a>
+  <a href="releaseorders">ReleaseOrders</a>
+</nav>
+
+<main>
+{{! Create a table }}
+<table id="customer-table">
+
+  {{! Header section }}
+  <thead>
+
+    {{! For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders }}
+    <tr>
+      {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+      {{/each}}
+      <th>delete</th>
+    </tr>
+  </thead>
+
+  {{! Body section }}
+  <tbody>
+
+    {{! For each row, print}}
+    {{#each data}}
+      <tr data-value={{this.customerID}}>
+        <td>{{this.customerID}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.customerName}}</td>
+        <td>{{this.password}}</td>
+        <td><img src="{{this.imageURL}}" alt="{{this.imageURL}}" style="width:100px;height:100px;"></td>
+        <td><button onclick="deleteCustomer({{this.customerID}})">Delete</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<section> 
+<h2>Search Customers</h2>
+<p>Search by Customer name using the field below. Partial customer names are OK too!</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="search-customer-html" method='GET' action='/Customers'>
+    <label for="input-customerSearch" class="required">Search by Customer Name: </label>
+    <input type="text" name="customerSearch" id="customerName">
+  
+    <input type="submit">
+    <a href='/'><button>Reset</button></a>
+</form>
+</section>
+
+<!-- /views/index.hbs -->
+<section>
+{{!-- Form to add a record to the table  --}}
+<h2>Add Customer</h2>
+<p>To add a new Customer, please enter their information below and click 'Submit'!</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="add-customer-form-ajax">
+    <label for="input-customerName" class="required">Customer Name: </label>
+    <input type="text" name="input-customerName" id="input-customerName">
+    
+    <label for="input-email" class="required">Email: </label>
+    <input type="text" name="input-email" id="input-email">
+
+    <label for="input-password" class="required">Password: </label>
+    <input type="text" name="input-password" id="input-password">
+
+    <label for="input-imageURL" class="required">Image URL: </label>
+    <input type="text" name="input-imageURL" id="input-imageURL">
+
+
+
+    <input type="submit">
+</form>
+</section>
+
+
+<section>
+<h2>Update customer</h2>
+<p>To update a specific Customer, select their name from the drop-down menu and then enter the new values.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="update-customer-form-ajax">
+
+    <label for="input-customerNameUpdate" class="required">Customer Name</label>
+    <select name="input-customerNameUpdate" id="mySelect">
+        <option value="test">Select an customer</option>
+        {{#each data}}
+        <option value="{{this.customerID}}">{{this.customerName}}</option>
+        {{/each}}
+    </select>
+  <label for="input-email-update" class="required">Email: </label>
+    <input type="text" name="input-email-update" id="input-email-update">
+
+    <label for="input-password-update" class="required">Password: </label>
+    <input type="text" name="input-password-update" id="input-password-update">
+
+
+    <input type="submit">
+
+</form>
+
+</section>
+
+</main>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/update_customer.js"></script>
+<script src="./js/add_customer.js"></script>
+<script src="./js/delete_customer.js"></script>
+<link rel="stylesheet" href="./css/global.css">

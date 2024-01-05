@@ -1,0 +1,136 @@
+{{! Create a table }}
+<h1>Releases</h1>
+<nav>
+  <a href="/#">Index</a>
+  <a href="Artists">Artists</a> 
+  <a href="Customers">Customers</a> 
+  <a href="releases">Releases</a> 
+  <a href="tracks">Tracks</a>
+  <a href="orders">Orders</a>
+  <a href="releaseorders">ReleaseOrders</a>
+</nav>
+
+<main>
+<table id="release-table">
+
+  {{! Header section }}
+  <thead>
+
+    {{! For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders }}
+    <tr>
+      {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+      {{/each}}
+      <th>delete</th>
+    </tr>
+  </thead>
+
+  {{! Body section }}
+  <tbody>
+
+    {{! For each row, print}}
+    {{#each data}}
+      <tr data-value={{this.releaseID}}>
+        <td>{{this.releaseID}}</td>
+        <td>{{this.title}}</td>
+        
+        <td><img src="{{this.imageURL}}" alt="{{this.title}}" style="width:100px;height:100px;"></td>
+        <td>{{this.releaseDate}}</td>
+        <td>{{this.price}}</td>
+        <td>{{this.artistID}}</td>
+        <td>{{this.description}}</td>
+        <td><button onclick="deleteRelease({{this.releaseID}})">Delete</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+  
+</table>
+<section>
+<h2>Search <em>Releases</em></h2>
+<p>Search by Title using the field below.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="search-release-html" method='GET' action='/releases'>
+    <label for="input-releaseSearch" class="required">Search by Title: </label>
+    <input type="text" name="releaseSearch" id="releaseName" placeholder="Enter the release title...">
+  
+    <input type="submit">
+    <a href='/releases'><button>Reset</button></a>
+</form>
+
+</section>
+<section>
+{{!-- Form to add a record to the table  --}}
+<h2>Add a <em>Release</em></h2>
+<p>To add a new Release, please enter the information below and click 'Submit'!</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="add-release-form-ajax">
+    <label for="input-releaseTitle" class="required">Release title: </label>
+    <input type="text" name="input-releaseTitle" id="input-releaseTitle" placeholder="Enter the release title...">
+    
+    <label for="input-date" class="required">release date: </label>
+    <input type="date" name="input-date" id="input-date">
+
+    <label for="input-description" class="required">Description: </label>
+    <input type="text" name="input-description" id="input-description" placeholder="Enter the release description...">
+
+    <label for="input-price" class="required">Price: </label>
+    <input type="number" name="input-price" id="input-price" placeholder="Enter the release price...">
+
+    <label for="input-imageURL" class="required">Image URL: </label>
+    <input type="text" name="input-imageURL" id="input-imageURL" placeholder="Enter the release image url...">
+
+    <label for="input-artistID" class="required">artistID: 
+        <select name="input-artistID" id="mySelectAdd">
+        <option value="test">Select an artist</option>
+        
+    </select>
+    </label>
+
+    <input type="submit">
+</form>
+</section>
+<section>
+<h2>Update a Release</h2>
+<p>To update a specific release's title, release date, description, price or image, select their name from the drop-down menu on the left and then enter the new values.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="update-release-form-ajax">
+
+    <label for="input-artistIDUpdate" class="required">Release</label>
+    <select name="input-artistIDUpdate" id="mySelectRelease">
+        <option value="test">Select a Release</option>
+        {{#each data}}
+        <option value="{{this.releaseID}}">{{this.title}}</option>
+        {{/each}}
+    </select>
+ 
+
+  <label for="input-title-update" class="required">title: </label>
+    <input type="text" name="input-title-update" id="input-title-update" placeholder="Enter the release title...">
+
+<label for="input-date-update" class="required">release date: </label>
+    <input type="date" name="input-date-update" id="input-date-update" placeholder="Enter the release date...">
+
+    <label for="input-image-update" class="required">Image: </label>
+    <input type="text" name="input-image-update" id="input-image-update" placeholder="Enter the release image url...">
+
+    <label for="input-description-update" class="required">description: </label>
+    <input type="text" name="input-description-update" id="input-description-update" placeholder="Enter the release description...">
+
+    <label for="input-price-update" class="required">Price: </label>
+    <input type="number" name="input-price-update" id="input-price-update" placeholder="Enter the release price...">
+
+
+    <input type="submit">
+
+</form>
+</section>
+</main>
+
+<script src="./js/retrieve_artists.js"></script>
+<script src="./js/add_release.js"></script>
+<script src="./js/update_release.js"></script>
+<script src="./js/delete_release.js"></script>
+<link rel="stylesheet" href="./css/global.css">

@@ -1,0 +1,131 @@
+<h1>Orders</h1>
+<nav>
+  <a href="/#">Index</a>
+  <a href="Artists">Artists</a> 
+  <a href="Customers">Customers</a> 
+  <a href="releases">Releases</a> 
+  <a href="tracks">Tracks</a>
+  <a href="orders">Orders</a>
+  <a href="releaseorders">ReleaseOrders</a>
+</nav>
+
+<main>
+<table id="order-table">
+  {{! Header section }}
+  <thead>
+
+    {{! For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders }}
+    <tr>
+      {{#each data.[0]}}
+        <th>
+          {{@key}}
+        </th>
+      {{/each}}
+      <th>delete</th>
+    </tr>
+  </thead>
+
+  {{! Body section }}
+  <tbody id="order-body">
+
+    {{! For each row, print}}
+    {{#each data}}
+      <tr data-value={{this.orderID}}>
+        <td>{{this.orderID}}</td>
+        <td>{{this.customerID}}</td>
+        <td>{{this.orderDate}}</td>
+        <td>{{this.totalPrice}}</td>
+        <td>{{this.salesTax}}</td>
+        
+        <td><button onclick="deleteOrder({{this.orderID}})">Delete</button></td>
+      </tr>
+    {{/each}}
+  </tbody>
+  
+</table>
+
+<section>
+<h2>Search <em>Orders</em> </h2>
+<p>Search by Order ID using the field below.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="search-order-html" method='GET' action='/orders'>
+    <label for="input-orderSearch" class="required">Search by Order ID: </label>
+    <input type="number" name="orderSearch" id="orderName" required placeholder="Enter an Order ID">
+  
+    <input type="submit">
+</form>
+<a href='/orders'><button>Reset</button></a>
+</section>
+
+
+<section>
+{{!-- Form to add a record to the table  --}}
+<h2>Add an Order</h2>
+<p>To add a new Order, please enter the information below and click 'Submit'!</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="add-order-form-ajax">
+    <label for="input-customerID" class="required">Customer ID: 
+        <select name="input-customerID" id="mySelectAdd" required>
+        <option value="">Select a Customer</option>
+        </select>
+    </label>
+    <label for="input-orderDate" class="required">Order date: </label>
+    <input type="date" name="input-orderDate" id="input-orderDate" required>
+
+    <label for="input-totalPrice" class="required">Total Price: </label>
+    <input type="number" name="input-totalPrice" id="input-totalPrice" step="0.01" required placeholder="Enter a price...">
+
+    <label for="input-salesTax" class="required">Sales Tax: </label>
+    <input type="number" name="input-salesTax" id="input-salesTax" step="0.01" required placeholder="Enter sales tax...">
+
+    <input type="submit">
+</form>
+</section>
+
+<section>
+<h2>Updating an Order</h2>
+<p>To update a specific Order's customer ID, order date, total price, or sales tax, select the ID from the drop-down menu on the left and then enter the new values.</p>
+<p>Required fields are indicated with: <span>*</span></p>
+<form id="update-order-form-ajax">
+
+  <label for="input-orderIDUpdate" class="required">Order</label>
+    <select name="input-orderIDUpdate" id="mySelectOrderUpdateOrder" required>
+        <option value="test">Select an Order</option>
+        {{#each data}}
+        <option value="{{this.orderID}}">{{this.orderID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-customerIDUpdate" class="required">Customer ID: 
+        <select name="input-customerIDUpdate" id="mySelectOrderUpdateCustomer">
+        <option value="test">Select a Customer</option>
+        <option value="" >Null</option>
+        </select>
+    </label>
+ 
+
+  <label for="input-orderDateUpdate" class="required">Order date: </label>
+    <input type="date" name="input-orderDateUpdate" id="input-orderDateUpdate" required>
+
+    <label for="input-totalPriceUpdate" class="required">Total Price: </label>
+    <input type="number" name="input-totalPriceUpdate" id="input-totalPriceUpdate" step="0.01" required placeholder="Enter a price...">
+
+    <label for="input-salesTaxUpdate" class="required">Sales Tax: </label>
+    <input type="number" name="input-salesTaxUpdate" id="input-salesTaxUpdate" step="0.01" required placeholder="Enter sales tax...">
+
+
+    <input type="submit">
+
+</form>
+</section>
+</main>
+
+<script src="./js/retrieve_customers.js"></script>
+
+<script src="./js/add_order.js"></script>
+<script src="./js/update_order.js"></script>
+<script src="./js/delete_order.js"></script>
+<link rel="stylesheet" href="./css/global.css">
+
+
